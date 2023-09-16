@@ -6,10 +6,10 @@ CREATE TABLE Cliente (
     cpf VARCHAR(255),
     telefone VARCHAR(255),
     email VARCHAR(255),
-    PRIMARY KEY (cpf, id_cliente, id_atendimento)
-	UNIQUE (cpf, telefone, email)    
-	CONSTRAINT check_cpf CHECK (cpf ~ '^[0-9]{11}$')
-    CONSTRAINT check_telefone CHECK (telefone ~ '^\([1-9]{2}\) 9[0-9]{4}-[0-9]{4}$')
+    PRIMARY KEY (id_cliente),
+	UNIQUE (cpf, telefone, email),
+	CONSTRAINT check_cpf CHECK (cpf ~ '^[0-9]{11}$'),
+    CONSTRAINT check_telefone CHECK (telefone ~ '^\([1-9]{2}\) 9[0-9]{4}-[0-9]{4}$'),
 	CONSTRAINT check_email CHECK (email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 );
 
@@ -21,36 +21,44 @@ CREATE TABLE Atendimento (
 );
 
 CREATE TABLE Funcionario (
-    id_func SERIAL PRIMARY KEY,
+    id_func SERIAL,
     nome VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     senha VARCHAR(64),
-    fk_Funcionario_id_func INT
+    id_gerente INT,
+	PRIMARY KEY (id_func),
 	CONSTRAINT check_email CHECK (email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 );
 
--- função para calcular o hash SHA-256 da senha
+-- Função para calcular o hash SHA-256 da senha
 CREATE OR REPLACE FUNCTION calcular_sha256_hash(plain_text VARCHAR) RETURNS VARCHAR AS $$
 BEGIN
     RETURN ENCODE(DIGEST(plain_text, 'sha256'), 'hex');
 END;
 $$ LANGUAGE plpgsql;
 
--- trigger para calcular o hash da senha antes da inserção
+-- Trigger para calcular o hash da senha antes da inserção
+CREATE OR REPLACE FUNCTION antes_de_inserir_funcionario()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.senha := calcular_sha256_hash(NEW.senha);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger para calcular o hash da senha antes da inserção
 CREATE TRIGGER antes_de_inserir_funcionario
 BEFORE INSERT ON Funcionario
 FOR EACH ROW
-BEGIN
-    NEW.senha := calcular_sha256_hash(NEW.senha);
-END;
+EXECUTE FUNCTION antes_de_inserir_funcionario();
 
 CREATE TABLE Hotel (
     id_hotel SERIAL PRIMARY KEY,
     nome VARCHAR(255),
     cidade VARCHAR(255),
     estado VARCHAR(255),
-    cnpj VARCHAR(255)
-	UNIQUE (cnpj)
+    cnpj VARCHAR(255),
+	UNIQUE (cnpj),
 	CONSTRAINT check_cpnj CHECK (cnpj ~ '^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$')
 );
 
@@ -59,15 +67,15 @@ CREATE TABLE EmpresaTransporte (
     nome VARCHAR(255),
     cidade VARCHAR(255),
     estado VARCHAR(255),
-    cnpj VARCHAR(255)
-	UNIQUE (nome, cnpj)
+    cnpj VARCHAR(255),
+	UNIQUE (nome, cnpj),
 	CONSTRAINT check_cpnj CHECK (cnpj ~ '^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$')
 );
 
 CREATE TYPE status AS ENUM (
     'Pago',
     'Sendo Processado',
-    'Pendente',
+    'Pendente'
 );
 
 /* Quando formos adicionar o pagamento ao pacote, 
@@ -82,10 +90,11 @@ CREATE TABLE Pacote_pagamento (
     fk_Funcionario_id_func INT,
     id_pagamento INT,
     fk_Cliente_id_cliente INT,
-    valor DOUBLE,
+    valor DOUBLE PRECISION,
     status status,
     data_pagamento TIMESTAMP,
-    PRIMARY KEY (id_pacote, id_pagamento)
+    PRIMARY KEY (id_pacote),
+	UNIQUE (id_pagamento),
 	CONSTRAINT check_id_pagamento CHECK (
     	(id_pagamento IS NULL) OR (id_pagamento > 0)
 	)
@@ -94,25 +103,25 @@ CREATE TABLE Pacote_pagamento (
 CREATE TABLE Boleto (
     cod_barras VARCHAR(44),
     fk_pagamento_id_pagamento INT,
-    PRIMARY KEY (fk_pagamento_id_pagamento)
+    PRIMARY KEY (fk_pagamento_id_pagamento),
 	UNIQUE(cod_barras)
 );
 
 CREATE TABLE Cartao (
     numero VARCHAR(255),
     fk_pagamento_id_pagamento INT,
-    PRIMARY KEY (fk_pagamento_id_pagamento)
-	UNIQUE(numero)
-	CONSTRAINT (check_cartao) CHECK (numero ~ '^\d{13,19}$')
+    PRIMARY KEY (fk_pagamento_id_pagamento),
+	UNIQUE(numero),
+	CONSTRAINT check_cartao CHECK (numero ~ '^\d{13,19}$')
 );
 
 CREATE TABLE PIX (
     conta VARCHAR(255),
     instituicao VARCHAR(255),
     fk_pagamento_id_pagamento INT,
-    PRIMARY KEY (fk_pagamento_id_pagamento)
-	UNIQUE(conta)
-	CONSTRAINT (check_conta) CHECK (conta ~ '^\d{6,12}$')
+    PRIMARY KEY (fk_pagamento_id_pagamento),
+	UNIQUE(conta),
+	CONSTRAINT check_conta CHECK (conta ~ '^\d{6,12}$')
 );
 
 CREATE TABLE Reserva (
@@ -122,7 +131,7 @@ CREATE TABLE Reserva (
     data_reserva TIMESTAMP,
     check_in TIMESTAMP,
     check_out TIMESTAMP,
-    valor DOUBLE
+    valor DOUBLE PRECISION
 );
 
 CREATE TYPE meio AS ENUM (
@@ -138,24 +147,27 @@ CREATE TABLE Transporta (
     id_viagem SERIAL PRIMARY KEY,
     data_viagem TIMESTAMP,
     check_in TIMESTAMP,
-    valor DOUBLE,
+    valor DOUBLE PRECISION,
     meio meio
 );
 
 CREATE TABLE Faz (
-    fk_Cliente_cpf VARCHAR(255),
     fk_Cliente_id_cliente INT,
-    fk_Cliente_id_atendimento INT,
     fk_pagamento_id_pagamento INT
 );
  
-ALTER TABLE Cliente ADD CONSTRAINT FK_Cliente_2
+ALTER TABLE Atendimento ADD CONSTRAINT FK_Atendimento_2
     FOREIGN KEY (fk_Funcionario_id_func)
     REFERENCES Funcionario (id_func)
     ON DELETE SET NULL;
+	
+ALTER TABLE Atendimento ADD CONSTRAINT FK_Atendimento_3
+    FOREIGN KEY (fk_Cliente_id_cliente)
+    REFERENCES Cliente (id_cliente)
+    ON DELETE SET NULL;
  
 ALTER TABLE Funcionario ADD CONSTRAINT FK_Funcionario_2
-    FOREIGN KEY (fk_Funcionario_id_func)
+    FOREIGN KEY (id_gerente)
     REFERENCES Funcionario (id_func);
  
 ALTER TABLE Pacote_pagamento ADD CONSTRAINT FK_Pacote_pagamento_2
@@ -201,8 +213,8 @@ ALTER TABLE Transporta ADD CONSTRAINT FK_Transporta_3
     ON DELETE SET NULL;
  
 ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
-    FOREIGN KEY (fk_Cliente_cpf, fk_Cliente_id_cliente, fk_Cliente_id_atendimento)
-    REFERENCES Cliente (cpf, id_cliente, id_atendimento)
+    FOREIGN KEY (fk_Cliente_id_cliente)
+    REFERENCES Cliente (id_cliente)
     ON DELETE SET NULL;
  
 ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
