@@ -1,6 +1,8 @@
+package controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.Pacote_Pagamento;
+import model.Pacote_Pagamento;
 
 public class PacotePagamentoController {
     @FXML

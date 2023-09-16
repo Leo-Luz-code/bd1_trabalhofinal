@@ -1,6 +1,8 @@
+package controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.Transporta;
+import model.Transporta;
 
 public class TransportaController {
     @FXML

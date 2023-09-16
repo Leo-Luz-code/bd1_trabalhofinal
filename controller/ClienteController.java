@@ -1,6 +1,8 @@
+package controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.Cliente;
+import model.Cliente;
 
 public class ClienteController {
     @FXML

@@ -8,7 +8,7 @@ public class Pix {
 
     public Pix(int idPacote, Date dataCriacao, int idPagamento, String cpfCliente, double valor, double desconto,
             String status, Date dataPagamento, String instituicao, String numConta) {
-        super(idPacote, dataCriacao, idPagamento, cpfCliente, valor, desconto, status, dataPagamento);
+        super();
         this.instituicao = instituicao;
         this.numConta = numConta;
     }

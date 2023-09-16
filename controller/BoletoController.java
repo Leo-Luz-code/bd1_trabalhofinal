@@ -1,6 +1,8 @@
+package controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.Boleto;
+import model.Boleto;
 
 public class BoletoController {
     @FXML

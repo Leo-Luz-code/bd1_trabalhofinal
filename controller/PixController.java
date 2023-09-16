@@ -1,6 +1,8 @@
+package controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import modelo.Pix;
+import model.Pix;
 
 public class PixController {
     @FXML
