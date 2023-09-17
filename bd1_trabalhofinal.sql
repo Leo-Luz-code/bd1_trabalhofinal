@@ -23,10 +23,14 @@ CREATE TABLE Atendimento (
 CREATE TABLE Funcionario (
     id_func SERIAL,
     nome VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
+	email VARCHAR(255) UNIQUE,
+    cpf VARCHAR(255) UNIQUE,
+	telefone VARCHAR(255) UNIQUE,
     senha VARCHAR(64),
     id_gerente INT,
 	PRIMARY KEY (id_func),
+	CONSTRAINT check_cpf CHECK (cpf ~ '^[0-9]{11}$'),
+    CONSTRAINT check_telefone CHECK (telefone ~ '^\([1-9]{2}\) 9[0-9]{4}-[0-9]{4}$'),
 	CONSTRAINT check_email CHECK (email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 );
 
@@ -108,7 +112,7 @@ CREATE TABLE Boleto (
 );
 
 CREATE TABLE Cartao (
-    numero VARCHAR(255),
+    numero VARCHAR(25),
     fk_pagamento_id_pagamento INT,
     PRIMARY KEY (fk_pagamento_id_pagamento),
 	UNIQUE(numero),
@@ -116,7 +120,7 @@ CREATE TABLE Cartao (
 );
 
 CREATE TABLE PIX (
-    conta VARCHAR(255),
+    conta VARCHAR(25),
     instituicao VARCHAR(255),
     fk_pagamento_id_pagamento INT,
     PRIMARY KEY (fk_pagamento_id_pagamento),
