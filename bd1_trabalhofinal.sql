@@ -26,35 +26,12 @@ CREATE TABLE Funcionario (
 	email VARCHAR(255) UNIQUE,
     cpf VARCHAR(255) UNIQUE,
 	telefone VARCHAR(255) UNIQUE,
-    senha VARCHAR(64),
     id_gerente INT,
 	PRIMARY KEY (id_func),
 	CONSTRAINT check_cpf CHECK (cpf ~ '^[0-9]{11}$'),
     CONSTRAINT check_telefone CHECK (telefone ~ '^\([1-9]{2}\) 9[0-9]{4}-[0-9]{4}$'),
 	CONSTRAINT check_email CHECK (email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 );
-
--- Função para calcular o hash SHA-256 da senha
-CREATE OR REPLACE FUNCTION calcular_sha256_hash(plain_text VARCHAR) RETURNS VARCHAR AS $$
-BEGIN
-    RETURN ENCODE(DIGEST(plain_text, 'sha256'), 'hex');
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger para calcular o hash da senha antes da inserção
-CREATE OR REPLACE FUNCTION antes_de_inserir_funcionario()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.senha := calcular_sha256_hash(NEW.senha);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger para calcular o hash da senha antes da inserção
-CREATE TRIGGER antes_de_inserir_funcionario
-BEFORE INSERT ON Funcionario
-FOR EACH ROW
-EXECUTE FUNCTION antes_de_inserir_funcionario();
 
 CREATE TABLE Hotel (
     id_hotel SERIAL PRIMARY KEY,

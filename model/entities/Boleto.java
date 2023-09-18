@@ -2,13 +2,15 @@ package model.entities;
 
 import java.util.Date;
 
-public class Boleto extends Pacote_Pagamento {
+public class Boleto {
     private String codBarras;
 
     public Boleto(int idPacote, Date dataCriacao, int idPagamento, String cpfCliente, double valor, double desconto,
             String status, Date dataPagamento, String codBarras) {
-        super(idPacote, dataCriacao, idPagamento, cpfCliente, valor, desconto, status, dataPagamento);
         this.codBarras = codBarras;
+    }
+
+    public Boleto() {
     }
 
     public String getCodBarras() {

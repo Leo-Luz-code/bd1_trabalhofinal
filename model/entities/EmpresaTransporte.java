@@ -15,6 +15,9 @@ public class EmpresaTransporte {
         this.cnpj = cnpj;
     }
 
+    public EmpresaTransporte() {
+    }
+
     public int getIdEmpresa() {
         return idEmpresa;
     }
