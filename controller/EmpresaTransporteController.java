@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import model.EmpresaTransporte;
+import model.entities.EmpresaTransporte;
 
 public class EmpresaTransporteController {
     @FXML

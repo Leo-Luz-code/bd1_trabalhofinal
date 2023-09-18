@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -29,6 +29,9 @@ public class Funcionario {
         this.email = new SimpleStringProperty(email);
         this.telefone = new SimpleStringProperty(telefone);
         this.cpf = new SimpleStringProperty(cpf);
+    }
+
+    public Funcionario() {
     }
 
     public Integer getIdGerente() {

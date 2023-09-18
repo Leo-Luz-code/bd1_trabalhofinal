@@ -15,10 +15,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
-public class MainController implements Initializable {
+public class ClientesController implements Initializable {
 
     @FXML
-    private Button buttonClientes;
+    private Button buttonFuncionarios;
 
     @FXML
     private Button buttonHotel;
@@ -46,8 +46,8 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // data = FXCollections.observableArrayList(null);
 
-        buttonClientes.setOnAction(e -> {
-            loadScene("/view/fxml/clientes.fxml");
+        buttonFuncionarios.setOnAction(e -> {
+            loadScene("/view/fxml/main.fxml");
         });
 
         buttonHotel.setOnAction(e -> {

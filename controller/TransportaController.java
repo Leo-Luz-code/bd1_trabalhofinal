@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import model.Transporta;
+import model.entities.Transporta;
 
 public class TransportaController {
     @FXML

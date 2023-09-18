@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import model.Cartao;
+import model.entities.Cartao;
 
 public class CartaoController {
     @FXML

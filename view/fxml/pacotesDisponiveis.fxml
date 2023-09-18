@@ -15,13 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="767.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.gui.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="767.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.gui.PacotesDisponiveisController">
    <children>
       <BorderPane layoutX="-1.0" prefHeight="478.0" prefWidth="768.0">
          <left>
             <VBox prefHeight="457.0" prefWidth="170.0" style="-fx-background-color: #2e7fe8;" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
                <children>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="49.0" prefWidth="170.0" stylesheets="@../css/style.css" text="Funcionários" textFill="WHITE">
+                  <Button fx:id="buttonFuncionarios" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="49.0" prefWidth="170.0" stylesheets="@../css/style.css" text="Funcionários" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -65,7 +65,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="buttonPacotesDisponiveis" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="49.0" prefWidth="170.0" stylesheets="@../css/style.css" text="Pacotes disponíveis" textFill="WHITE">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="49.0" prefWidth="170.0" stylesheets="@../css/style.css" text="Pacotes disponíveis" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -116,7 +116,7 @@
                      <center>
                         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                           <tabs>
-                            <Tab text="Funcionários">
+                            <Tab text="Pacotes">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="596.0">
                                        <children>
@@ -124,7 +124,7 @@
                                              <top>
                                                 <HBox prefHeight="37.0" prefWidth="597.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Label text="Funcionários" textFill="WHITE">
+                                                      <Label text="Pacotes disponíveis" textFill="WHITE">
                                                          <HBox.margin>
                                                             <Insets bottom="5.0" left="10.0" top="5.0" />
                                                          </HBox.margin>
@@ -160,49 +160,6 @@
                                     </AnchorPane>
                               </content>
                             </Tab>
-                              <Tab text="Gerentes">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="596.0">
-                                       <children>
-                                          <BorderPane prefHeight="404.0" prefWidth="597.0">
-                                             <top>
-                                                <HBox prefHeight="37.0" prefWidth="597.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
-                                                   <children>
-                                                      <Label text="Gerentes" textFill="WHITE">
-                                                         <HBox.margin>
-                                                            <Insets bottom="5.0" left="10.0" top="5.0" />
-                                                         </HBox.margin>
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Button maxHeight="-Infinity" mnemonicParsing="false" prefHeight="138.0" prefWidth="88.0" text="Novo">
-                                                         <HBox.margin>
-                                                            <Insets left="5.0" top="10.0" />
-                                                         </HBox.margin>
-                                                      </Button>
-                                                   </children>
-                                                </HBox>
-                                             </top>
-                                             <center>
-                                                <TableView prefHeight="389.0" prefWidth="597.0" BorderPane.alignment="CENTER">
-                                                   <columns>
-                                                      <TableColumn prefWidth="75.0" text="ID" />
-                                                      <TableColumn prefWidth="75.0" text="Nome" />
-                                                      <TableColumn prefWidth="75.0" text="Email" />
-                                                      <TableColumn prefWidth="75.0" text="Telefone" />
-                                                      <TableColumn prefWidth="75.0" text="CPF" />
-                                                   </columns>
-                                                   <columnResizePolicy>
-                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                   </columnResizePolicy>
-                                                </TableView>
-                                             </center>
-                                          </BorderPane>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
                           </tabs>
                         </TabPane>
                      </center>

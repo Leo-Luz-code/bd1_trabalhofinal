@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import model.Hotel;
+import model.entities.Hotel;
 
 public class HotelController {
     @FXML

@@ -15,7 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
-public class MainController implements Initializable {
+public class PacotesDisponiveisController implements Initializable {
 
     @FXML
     private Button buttonClientes;
@@ -30,7 +30,7 @@ public class MainController implements Initializable {
     private Button buttonPacotesVendidos;
 
     @FXML
-    private Button buttonPacotesDisponiveis;
+    private Button buttonFuncionarios;
 
     @FXML
     private Button buttonPagamentos;
@@ -62,8 +62,8 @@ public class MainController implements Initializable {
             loadScene("/view/fxml/pacotesVendidos.fxml");
         });
 
-        buttonPacotesDisponiveis.setOnAction(e -> {
-            loadScene("/view/fxml/pacotesDisponiveis.fxml");
+        buttonFuncionarios.setOnAction(e -> {
+            loadScene("/view/fxml/main.fxml");
         });
 
         buttonPagamentos.setOnAction(e -> {

@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import model.Funcionario;
+import model.entities.Funcionario;
 
 public class FuncionarioController {
     @FXML

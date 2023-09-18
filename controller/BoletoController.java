@@ -2,7 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import model.Boleto;
+import model.entities.Boleto;
 
 public class BoletoController {
     @FXML
