@@ -22,11 +22,9 @@ public class FuncionarioSqlJdbc {
                 funcionarios = new ArrayList<>();
                 while (rs.next()) {
                     Funcionario f = new Funcionario();
-                    f.setIdFuncionario(rs.getInt("if_func"));
+                    f.setIdFuncionario(rs.getInt("id_func"));
                     f.setNome(rs.getString("nome"));
-                    f.setCpf(rs.getString("cpf"));
-                    f.setEmail(rs.getString("email"));
-                    f.setTelefone(rs.getString("telefone"));
+                    f.setNome(rs.getString("email"));
                     f.setIdGerente(rs.getInt("id_gerente"));
                     funcionarios.add(f);
                 }
@@ -40,7 +38,7 @@ public class FuncionarioSqlJdbc {
     }
 
     public List<Funcionario> getAllGerentes() {
-        String sql = "SELECT * FROM funcionario  WHERE ";
+        String sql = "SELECT * FROM funcionario WHERE id";
         List<Funcionario> funcionarios = null;
 
         try (Connection connection = new ConnectionTravel().getConnection();
@@ -51,11 +49,9 @@ public class FuncionarioSqlJdbc {
                 funcionarios = new ArrayList<>();
                 while (rs.next()) {
                     Funcionario f = new Funcionario();
-                    f.setIdFuncionario(rs.getInt("idFuncionario"));
+                    f.setIdFuncionario(rs.getInt("id_func"));
                     f.setNome(rs.getString("nome"));
-                    f.setCpf(rs.getString("cpf"));
                     f.setEmail(rs.getString("email"));
-                    f.setTelefone(rs.getString("telefone"));
                     f.setIdGerente(rs.getInt("id_gerente"));
                     funcionarios.add(f);
                 }
@@ -68,7 +64,7 @@ public class FuncionarioSqlJdbc {
         return funcionarios;
     }
 
-    public void createFuncionario(Funcionario funcionario) {
+    public void createFuncionarioSemGerente(Funcionario funcionario) {
         String sql = "insert into funcionario (id_func, nome, email) values (?, ?, ?)";
 
         try (Connection connection = new ConnectionTravel().getConnection();
@@ -76,7 +72,21 @@ public class FuncionarioSqlJdbc {
             pst.setInt(1, funcionario.getIdFuncionario());
             pst.setString(2, funcionario.getNome().toUpperCase());
             pst.setString(3, funcionario.getEmail().toUpperCase());
+            pst.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void createFuncionarioComGerente(Funcionario funcionario) {
+        String sql = "insert into funcionario (id_func, nome, email, id_gerente) values (?, ?, ?, ?)";
+
+        try (Connection connection = new ConnectionTravel().getConnection();
+                PreparedStatement pst = connection.prepareStatement(sql);) {
+            pst.setInt(1, funcionario.getIdFuncionario());
+            pst.setString(2, funcionario.getNome().toUpperCase());
+            pst.setString(3, funcionario.getEmail().toUpperCase());
+            pst.setInt(4, funcionario.getIdGerente());
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,7 +94,7 @@ public class FuncionarioSqlJdbc {
     }
 
     public Funcionario readFuncionario(int idFuncionario) {
-        String sql = "select * from Funcionario where id_func = ?";
+        String sql = "select * from funcionario where id_func = ?";
         Funcionario funcionario = null;
         ResultSet rs;
         try (Connection connection = new ConnectionTravel().getConnection();
@@ -95,9 +105,10 @@ public class FuncionarioSqlJdbc {
 
             if (rs.next()) {
                 funcionario = new Funcionario();
-                funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
+                funcionario.setIdFuncionario(rs.getInt("id_func"));
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setEmail(rs.getString("email"));
+                funcionario.setIdGerente(rs.getInt("id_gerente"));
             }
 
             rs.close();
@@ -109,13 +120,14 @@ public class FuncionarioSqlJdbc {
     }
 
     public void updateFuncionario(Funcionario funcionario) {
-        String sql = "update Funcionario set nome = ?, email = ? where idFuncionario = ?";
+        String sql = "update funcionario set nome = ?, email = ?, id_gerente = ? where id_func = ?";
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);) {
             pst.setString(1, funcionario.getNome().toUpperCase());
             pst.setString(2, funcionario.getEmail().toUpperCase());
-            pst.setInt(3, funcionario.getIdFuncionario());
+            pst.setInt(3, funcionario.getIdGerente());
+            pst.setInt(4, funcionario.getIdFuncionario());
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,7 +135,7 @@ public class FuncionarioSqlJdbc {
     }
 
     public void deleteFuncionario(Funcionario funcionario) {
-        String sql = "delete from Funcionario where idFuncionario = ?";
+        String sql = "delete from funcionario where id_func = ?";
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);) {

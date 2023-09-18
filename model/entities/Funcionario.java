@@ -7,8 +7,6 @@ public class Funcionario {
     private SimpleIntegerProperty idFuncionario;
     private SimpleIntegerProperty idGerente;
     private SimpleStringProperty nome;
-    private SimpleStringProperty cpf;
-    private SimpleStringProperty telefone;
     private SimpleStringProperty email;
 
     // Construtor para quem tem gerente
@@ -17,8 +15,6 @@ public class Funcionario {
         this.idFuncionario = new SimpleIntegerProperty(idFuncionario);
         this.nome = new SimpleStringProperty(nome);
         this.email = new SimpleStringProperty(email);
-        this.telefone = new SimpleStringProperty(telefone);
-        this.cpf = new SimpleStringProperty(cpf);
         this.idGerente = new SimpleIntegerProperty(idGerente);
     }
 
@@ -27,8 +23,6 @@ public class Funcionario {
         this.idFuncionario = new SimpleIntegerProperty(idFuncionario);
         this.nome = new SimpleStringProperty(nome);
         this.email = new SimpleStringProperty(email);
-        this.telefone = new SimpleStringProperty(telefone);
-        this.cpf = new SimpleStringProperty(cpf);
     }
 
     public Funcionario() {
@@ -40,22 +34,6 @@ public class Funcionario {
 
     public void setIdGerente(Integer idGerente) {
         this.idGerente.set(idGerente);
-    }
-
-    public String getCpf() {
-        return cpf.get();
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf.set(cpf);
-    }
-
-    public String getTelefone() {
-        return telefone.get();
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone.set(telefone);
     }
 
     public int getIdFuncionario() {

@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.text.TableView;
-
 import application.Principal;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import model.entities.Funcionario;
 
 public class MainController implements Initializable {
 
@@ -39,12 +43,25 @@ public class MainController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private TableView tableView;
-    // private final ObservableList<Funcionario> data;
+    private TableView<Funcionario> tableView;
+
+    @FXML
+    private TableColumn<Funcionario, Integer> columnId;
+
+    @FXML
+    private TableColumn<Funcionario, String> columnNome;
+
+    @FXML
+    private TableColumn<Funcionario, String> columnEmail;
+
+    @FXML
+    private TableColumn<Funcionario, Integer> columnIdGerente;
+
+    private ObservableList<Funcionario> data;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // data = FXCollections.observableArrayList(null);
+        data = FXCollections.observableArrayList(data);
 
         buttonClientes.setOnAction(e -> {
             loadScene("/view/fxml/clientes.fxml");
@@ -69,6 +86,12 @@ public class MainController implements Initializable {
         buttonPagamentos.setOnAction(e -> {
             loadScene("/view/fxml/pagamentos.fxml");
         });
+
+        columnId.setCellValueFactory(new PropertyValueFactory<>("id_func"));
+        columnId.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnId.setCellValueFactory(new PropertyValueFactory<>("email"));
+        columnId.setCellValueFactory(new PropertyValueFactory<>("id_gerente"));
+
     }
 
     public void loadScene(String absoluteName) {
@@ -79,7 +102,6 @@ public class MainController implements Initializable {
             Scene scene = new Scene(root);
             Principal.getMainStage().setScene(scene);
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }
