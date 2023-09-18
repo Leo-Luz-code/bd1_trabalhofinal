@@ -1,4 +1,4 @@
-package sql;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,24 +10,24 @@ import java.util.List;
 import model.entities.EmpresaTransporte;
 
 public class EmpresaTransporteSqlJdbc {
-    public List<EmpresaTransporte> getAllEmpresas() {
-        String sql = "SELECT * FROM Cliente";
-        List<EmpresaTransporte> empresasTransporte = null;
+    public List<EmpresaTransporte> getAllEmpresaTransportes() {
+        String sql = "SELECT * FROM empresatransporte";
+        List<EmpresaTransporte> hoteis = null;
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery()) {
 
             if (rs != null) {
-                empresasTransporte = new ArrayList<>();
+                hoteis = new ArrayList<>();
                 while (rs.next()) {
-                    EmpresaTransporte e = new EmpresaTransporte();
-                    e.setIdEmpresa(rs.getInt("idEmpresa"));
-                    e.setNome(rs.getString("nome"));
-                    e.setCidade(rs.getString("cidade"));
-                    e.setEstado(rs.getString("estado"));
-                    e.setCnpj(rs.getString("cnpj"));
-                    empresasTransporte.add(e);
+                    EmpresaTransporte h = new EmpresaTransporte();
+                    h.setIdEmpresa(rs.getInt("id_empresa"));
+                    h.setNome(rs.getString("nome"));
+                    h.setCidade(rs.getString("cidade"));
+                    h.setEstado(rs.getString("estado"));
+                    h.setCnpj(rs.getString("cnpj"));
+                    hoteis.add(h);
                 }
             }
 
@@ -35,27 +35,25 @@ public class EmpresaTransporteSqlJdbc {
             e.printStackTrace();
         }
 
-        return empresasTransporte;
+        return hoteis;
     }
 
-    @Override
     public void createEmpresaTransporte(EmpresaTransporte e) {
-        String sql = "insert into EmpresaTransporte (idEmpresa, nome, cidade, estado, cnpj) values (?, ?, ?, ?, ?)";
+        String sql = "insert into empresatransporte (idEmpresa, nome, cidade, estado, cnpj) values (?, ?, ?, ?, ?)";
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);) {
             pst.setInt(1, e.getIdEmpresa());
             pst.setString(2, e.getNome().toUpperCase());
             pst.setString(3, e.getCidade().toUpperCase());
-            pst.setEstado(4, e.getEstado().toUpperCase());
-            pst.setCnpj(5, e.getCnpj().toUpperCase());
+            pst.setString(4, e.getEstado().toUpperCase());
+            pst.setString(5, e.getCnpj().toUpperCase());
             pst.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
-    @Override
     public EmpresaTransporte readEmpresaTransporte(int idEmpresa) {
         String sql = "select * from EmpresaTransporte where idEmpresa = ?";
         EmpresaTransporte empresa = null;
@@ -83,7 +81,6 @@ public class EmpresaTransporteSqlJdbc {
         return empresa;
     }
 
-    @Override
     public void updateEmpresaTransporte(EmpresaTransporte empresa) {
         String sql = "update EmpresaTransporte set nome = ?, cidade = ?, estado = ?, cnpj = ? where idEmpresa = ?";
 
@@ -100,7 +97,6 @@ public class EmpresaTransporteSqlJdbc {
         }
     }
 
-    @Override
     public void deleteEmpresaTransporte(EmpresaTransporte empresa) {
         String sql = "delete from EmpresaTransporte where idEmpresa = ?";
 

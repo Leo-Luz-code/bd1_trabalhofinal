@@ -22,13 +22,11 @@ public class ClienteSqlJdbc {
                 clientes = new ArrayList<>();
                 while (rs.next()) {
                     Cliente c = new Cliente();
-                    c.setIdCliente(rs.getInt("idCliente"));
-                    c.setIdAtendimento(rs.getInt("idAtendimento"));
-                    c.setEmail(rs.getString("email"));
-                    c.setTelefone(rs.getDate("telefone"));
+                    c.setIdCliente(rs.getInt("id_cliente"));
                     c.setNome(rs.getString("nome"));
                     c.setCpf(rs.getString("cpf"));
-                    c.setDataAtendimento(rs.getDate("dataAtendimento"));
+                    c.setTelefone(rs.getString("telefone"));
+                    c.setEmail(rs.getString("email"));
                     clientes.add(c);
                 }
             }
@@ -40,26 +38,21 @@ public class ClienteSqlJdbc {
         return clientes;
     }
 
-    @Override
-    public void createFuncionario(Cliente cliente) {
-        String sql = "insert into Cliente (idCliente, idAtendimento, email, telefone, nome, cpf, dataAtendimento) values (?, ?, ?, ?, ?, ?, ?)";
+    public void createCliente(Cliente cliente) {
+        String sql = "insert into Cliente (nome, cpf, telefone, email) values (?, ?, ?, ?)";
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);) {
-            pst.setInt(1, cliente.getIdCliente());
-            pst.setInt(2, cliente.getIdAtendimento());
-            pst.setString(3, cliente.getEmail().toUpperCase());
-            pst.setString(4, cliente.getTelefone().toUpperCase());
-            pst.setString(5, cliente.getNome().toUpperCase());
-            pst.setString(6, cliente.getCpf().toUpperCase());
-            pst.setDate(7, cliente.getDataAtendimento());
+            pst.setString(1, cliente.getNome().toUpperCase());
+            pst.setString(2, cliente.getCpf());
+            pst.setString(3, cliente.getTelefone());
+            pst.setString(4, cliente.getEmail());
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
     public Cliente readCliente(int idCliente) {
         String sql = "select * from Cliente where idCliente = ?";
         Cliente cliente = null;
@@ -89,7 +82,6 @@ public class ClienteSqlJdbc {
         return cliente;
     }
 
-    @Override
     public void updateCliente(Cliente cliente) {
         String sql = "update Cliente set nome = ?, cpf = ?, dataAtendimento = ?, telefone = ?, idAtendimento = ?, email = ? where idCliente = ?";
 
@@ -108,7 +100,6 @@ public class ClienteSqlJdbc {
         }
     }
 
-    @Override
     public void deleteCliente(Cliente cliente) {
         String sql = "delete from Cliente where idCliente = ?";
 

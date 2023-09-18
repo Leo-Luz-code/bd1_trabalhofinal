@@ -11,7 +11,7 @@ import model.entities.Hotel;
 
 public class HotelSqlJdbc {
     public List<Hotel> getAllHoteis() {
-        String sql = "SELECT * FROM Hotel";
+        String sql = "SELECT * FROM hotel";
         List<Hotel> hoteis = null;
 
         try (Connection connection = new ConnectionTravel().getConnection();

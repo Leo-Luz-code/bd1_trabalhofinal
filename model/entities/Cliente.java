@@ -1,6 +1,6 @@
 package model.entities;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Cliente {
     private String nome;
@@ -20,6 +20,9 @@ public class Cliente {
         this.idCliente = idCliente;
         this.idAtendimento = idAtendimento;
         this.dataAtendimento = dataAtendimento;
+    }
+
+    public Cliente() {
     }
 
     public String getCpf() {

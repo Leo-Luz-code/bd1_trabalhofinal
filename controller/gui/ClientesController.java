@@ -4,18 +4,30 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.text.TableView;
-
 import application.Principal;
+import dao.ClienteSqlJdbc;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import model.entities.Cliente;
 
 public class ClientesController implements Initializable {
+
+    ClienteSqlJdbc clienteSqlJdbc = new ClienteSqlJdbc();
+
+    @FXML
+    private Button buttonNovo;
 
     @FXML
     private Button buttonFuncionarios;
@@ -39,8 +51,24 @@ public class ClientesController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private TableView tableView;
-    // private final ObservableList<Funcionario> data;
+    private TableView<Cliente> tableView;
+
+    @FXML
+    private TableColumn<Cliente, Integer> tcIdCliente;
+
+    @FXML
+    private TableColumn<Cliente, String> tcNome;
+
+    @FXML
+    private TableColumn<Cliente, String> tcCpf;
+
+    @FXML
+    private TableColumn<Cliente, String> tcTelefone;
+
+    @FXML
+    private TableColumn<Cliente, String> tcEmail;
+
+    private ObservableList<Cliente> data;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +97,35 @@ public class ClientesController implements Initializable {
         buttonPagamentos.setOnAction(e -> {
             loadScene("/view/fxml/pagamentos.fxml");
         });
+
+        buttonNovo.setOnAction(e -> {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/forms/clienteForm.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                Scene mainScene = new Scene(root);
+
+                stage.initOwner(Principal.getMainStage());
+                stage.setScene(mainScene);
+                stage.setTitle("Travels N' Travels!");
+                stage.getIcons().add(new Image("view/icons/icon.png"));
+                stage.showAndWait();
+                stage.setResizable(false);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        tcIdCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+        tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tcCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        tcTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        data = FXCollections.observableArrayList(clienteSqlJdbc.getAllClientes());
+        tableView.setItems(data);
     }
 
     public void loadScene(String absoluteName) {

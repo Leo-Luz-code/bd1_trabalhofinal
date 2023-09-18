@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="375.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.gui.forms.ClienteFormController">
+   <children>
+      <TextField fx:id="tfNome" layoutX="111.0" layoutY="98.0" promptText="Digite aqui..." />
+      <TextField fx:id="tfCpf" layoutX="111.0" layoutY="151.0" promptText="Digite aqui..." />
+      <Label layoutX="129.0" layoutY="14.0" text="Novo cliente">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="170.0" layoutY="81.0" text="Nome" />
+      <Label layoutX="176.0" layoutY="133.0" text="CPF" />
+      <Label layoutX="164.0" layoutY="188.0" text="Telefone" />
+      <TextField fx:id="tfTelefone" layoutX="111.0" layoutY="205.0" promptText="Digite aqui..." />
+      <Button fx:id="buttonSalvar" layoutX="163.0" layoutY="329.0" mnemonicParsing="false" text="Salvar" />
+      <TextField fx:id="tfEmail" layoutX="113.0" layoutY="263.0" promptText="Digite aqui..." />
+      <Label layoutX="172.0" layoutY="246.0" text="Email" />
+   </children>
+</AnchorPane>

@@ -141,14 +141,14 @@
                                                 </HBox>
                                              </top>
                                              <center>
-                                                <TableView prefHeight="389.0" prefWidth="597.0" BorderPane.alignment="CENTER">
+                                                <TableView fx:id="tableView" prefHeight="389.0" prefWidth="597.0" BorderPane.alignment="CENTER">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="ID" />
-                                                    <TableColumn prefWidth="75.0" text="Nome" />
-                                                      <TableColumn prefWidth="75.0" text="Email" />
-                                                      <TableColumn prefWidth="75.0" text="Telefone" />
-                                                      <TableColumn prefWidth="75.0" text="CPF" />
-                                                      <TableColumn prefWidth="75.0" text="Gerente" />
+                                                    <TableColumn fx:id="tcIdPacote" prefWidth="75.0" text="ID" />
+                                                    <TableColumn fx:id="tcFunc" prefWidth="75.0" text="Funcionário" />
+                                                      <TableColumn fx:id="tcHotel" prefWidth="75.0" text="Hotel" />
+                                                      <TableColumn fx:id="tcValor" prefWidth="75.0" text="Valor" />
+                                                      <TableColumn fx:id="tcCheckin" prefWidth="75.0" text="Check-in" />
+                                                      <TableColumn fx:id="tcCheckout" prefWidth="75.0" text="Check-out" />
                                                   </columns>
                                                    <columnResizePolicy>
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

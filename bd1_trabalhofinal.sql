@@ -73,7 +73,7 @@ CREATE TABLE Pacote_pagamento (
     status status,
     data_pagamento TIMESTAMP,
     PRIMARY KEY (id_pacote),
-	UNIQUE (id_pagamento),
+	UNIQUE (id_pacote, id_pagamento),
 	CONSTRAINT check_id_pagamento CHECK (
     	(id_pagamento IS NULL) OR (id_pagamento > 0)
 	)
