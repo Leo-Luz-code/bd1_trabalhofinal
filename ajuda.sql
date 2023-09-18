@@ -75,6 +75,7 @@ VALUES
 (5, 7, NOW(), NOW(), NOW() + INTERVAL '3 days', 80.00),
 (6, 8, NOW(), NOW() + INTERVAL '3 days', NOW() + INTERVAL '13 days', 200.00);
 
+-- views
 CREATE VIEW view_pacote_reserva AS
 SELECT 
     pp.id_pacote AS id_pacote,
@@ -106,7 +107,7 @@ JOIN
 JOIN
     hotel h ON r.fk_hotel_id_hotel = h.id_hotel;
 
--- Query com group by
+-- Queries com group by
 SELECT h.nome as hotel, fk_hotel_id_hotel as id_hotel, SUM(valor) as rendimento_total
 FROM reserva
 JOIN hotel h on fk_hotel_id_hotel = id_hotel

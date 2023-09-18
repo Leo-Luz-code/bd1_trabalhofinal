@@ -29,8 +29,8 @@ public class PacotesDisponiveisController implements Initializable {
 
     PacotePagamentoSqlJdbc pacotePagamentoSqlJdbc = new PacotePagamentoSqlJdbc();
 
-    @FXML
-    private Button buttonNovo;
+    // @FXML
+    // private Button buttonNovo;
 
     @FXML
     private Button buttonClientes;
@@ -127,25 +127,6 @@ public class PacotesDisponiveisController implements Initializable {
             e1.printStackTrace();
         }
 
-        buttonNovo.setOnAction(e -> {
-            Stage stage = new Stage();
-            FXMLLoader loaderB = new FXMLLoader(getClass().getResource("/view/fxml/forms/mainForm.fxml"));
-            Parent rootB;
-            try {
-                rootB = loaderB.load();
-                Scene mainScene = new Scene(rootB);
-
-                stage.initOwner(Principal.getMainStage());
-                stage.setScene(mainScene);
-                stage.setTitle("Travels N' Travels!");
-                stage.getIcons().add(new Image("view/icons/icon.png"));
-                stage.showAndWait();
-                stage.setResizable(false);
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
     }
 
 }
