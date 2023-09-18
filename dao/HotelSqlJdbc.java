@@ -1,4 +1,4 @@
-package sql;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Hotel;
+import model.entities.Hotel;
 
 public class HotelSqlJdbc {
-     public List <Hotel> getAllHoteis() {
+    public List<Hotel> getAllHoteis() {
         String sql = "SELECT * FROM Hotel";
-        List <Hotel> hoteis = null;
+        List<Hotel> hoteis = null;
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);
@@ -22,11 +22,11 @@ public class HotelSqlJdbc {
                 hoteis = new ArrayList<>();
                 while (rs.next()) {
                     Hotel h = new Hotel();
-                    h.setIdHotel(rs.getInt("idHotel"));
-                    h.setNome (rs.getString ("nome"));
-                    h.setCidade(rs.getString ("cidade"));
-                    h.setEstado(rs.setString("estado"));
-                    h.setCnpj(rs.setString("cnpj"));
+                    h.setIdHotel(rs.getInt("id_hotel"));
+                    h.setNome(rs.getString("nome"));
+                    h.setCidade(rs.getString("cidade"));
+                    h.setEstado(rs.getString("estado"));
+                    h.setCnpj(rs.getString("cnpj"));
                     hoteis.add(h);
                 }
             }
@@ -38,25 +38,23 @@ public class HotelSqlJdbc {
         return hoteis;
     }
 
-    @Override
-    public void createHotel (Hotel hotel) {
+    public void createHotel(Hotel hotel) {
         String sql = "insert into Hotel (idHotel, nome, cidade, estado, cnpj) values (?, ?, ?, ?, ?)";
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);) {
             pst.setInt(1, hotel.getIdHotel());
             pst.setString(2, hotel.getNome().toUpperCase());
-            pst.setString (3, hotel.getCidade().toUpperCase());
-            pst.setString (4, hotel.getEstado().toUpperCase());
-            pst.setString (5, hotel.getCnpj().toUpperCase());
+            pst.setString(3, hotel.getCidade().toUpperCase());
+            pst.setString(4, hotel.getEstado().toUpperCase());
+            pst.setString(5, hotel.getCnpj().toUpperCase());
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public Hotel readHotel (int idHotel) {
+    public Hotel readHotel(int idHotel) {
         String sql = "select * from Hotel where idHotel = ?";
         Hotel hotel = null;
         ResultSet rs;
@@ -68,11 +66,11 @@ public class HotelSqlJdbc {
 
             if (rs.next()) {
                 hotel = new Hotel();
-                hotel.setIdHotel(rs.getInt("idHotel"));
+                hotel.setIdHotel(rs.getInt("id_hotel"));
                 hotel.setNome(rs.getString("nome"));
                 hotel.setCidade(rs.getString("cidade"));
                 hotel.setEstado(rs.getString("estado"));
-                hotel.setCnpj(rs.getString ("cnpj"));
+                hotel.setCnpj(rs.getString("cnpj"));
             }
 
             rs.close();
@@ -83,8 +81,7 @@ public class HotelSqlJdbc {
         return hotel;
     }
 
-    @Override
-    public void updateHotel (Hotel hotel) {
+    public void updateHotel(Hotel hotel) {
         String sql = "update Hotel set nome = ?, cidade = ?, estado = ?, cnpj = ? where idHotel = ?";
 
         try (Connection connection = new ConnectionTravel().getConnection();
@@ -92,16 +89,15 @@ public class HotelSqlJdbc {
             pst.setString(1, hotel.getNome().toUpperCase());
             pst.setString(2, hotel.getCidade().toUpperCase());
             pst.setString(3, hotel.getEstado().toUpperCase());
-            pst.setString (4, hotel.getCnpj().toUpperCase());
-            pst.setInt (5, hotel.getIdHotel());
+            pst.setString(4, hotel.getCnpj().toUpperCase());
+            pst.setInt(5, hotel.getIdHotel());
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void deleteHotel (Hotel hotel) {
+    public void deleteHotel(Hotel hotel) {
         String sql = "delete from Hotel where idHotel = ?";
 
         try (Connection connection = new ConnectionTravel().getConnection();

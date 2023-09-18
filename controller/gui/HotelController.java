@@ -4,18 +4,26 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.text.TableView;
-
 import application.Principal;
+import dao.HotelSqlJdbc;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import model.entities.Funcionario;
+import model.entities.Hotel;
 
 public class HotelController implements Initializable {
+
+    HotelSqlJdbc hotelSqlJdbc = new HotelSqlJdbc();
 
     @FXML
     private Button buttonClientes;
@@ -39,8 +47,26 @@ public class HotelController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private TableView tableView;
-    // private final ObservableList<Funcionario> data;
+    private TableView<Hotel> tableView;
+
+    @FXML
+    private TableColumn<Hotel, Integer> tcIdHotel;
+
+    @FXML
+    private TableColumn<Hotel, String> tcNome;
+
+    @FXML
+    private TableColumn<Hotel, String> tcCidade;
+
+    @FXML
+    private TableColumn<Hotel, String> tcEstado;
+
+    @FXML
+    private TableColumn<Hotel, String> tcCpnj;
+
+    @FXML
+    private TableColumn<Funcionario, Integer> columnIdGerente;
+    private ObservableList<Hotel> data;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +95,15 @@ public class HotelController implements Initializable {
         buttonPagamentos.setOnAction(e -> {
             loadScene("/view/fxml/pagamentos.fxml");
         });
+
+        tcIdHotel.setCellValueFactory(new PropertyValueFactory<>("idHotel"));
+        tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tcCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
+        tcEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        tcCpnj.setCellValueFactory(new PropertyValueFactory<>("cnpj"));
+
+        data = FXCollections.observableArrayList(hotelSqlJdbc.getAllHoteis());
+        tableView.setItems(data);
     }
 
     public void loadScene(String absoluteName) {
@@ -79,7 +114,6 @@ public class HotelController implements Initializable {
             Scene scene = new Scene(root);
             Principal.getMainStage().setScene(scene);
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }

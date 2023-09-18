@@ -17,12 +17,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.entities.Funcionario;
 
 public class MainController implements Initializable {
 
     FuncionarioSqlJdbc funcionarioSqlJdbc = new FuncionarioSqlJdbc();
+
+    @FXML
+    private Button buttonNovo;
 
     @FXML
     private Button buttonClientes;
@@ -49,7 +54,7 @@ public class MainController implements Initializable {
     private TableView<Funcionario> tableView;
 
     @FXML
-    private TableColumn<Funcionario, Integer> columnId;
+    private TableColumn<Funcionario, String> columnIdFunc;
 
     @FXML
     private TableColumn<Funcionario, String> columnNome;
@@ -89,12 +94,32 @@ public class MainController implements Initializable {
             loadScene("/view/fxml/pagamentos.fxml");
         });
 
-        columnId.setCellValueFactory(new PropertyValueFactory<>("idFunc"));
+        buttonNovo.setOnAction(e -> {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/forms/mainForm.fxml"));
+            Parent root;
+            try {
+                root = loader.load();
+                Scene mainScene = new Scene(root);
+
+                stage.initOwner(Principal.getMainStage());
+                stage.setScene(mainScene);
+                stage.setTitle("Travels N' Travels!");
+                stage.getIcons().add(new Image("view/icons/icon.png"));
+                stage.showAndWait();
+                stage.setResizable(false);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        columnIdFunc.setCellValueFactory(new PropertyValueFactory<>("idFuncionario"));
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         columnIdGerente.setCellValueFactory(new PropertyValueFactory<>("idGerente"));
 
-        data = FXCollections.observableArrayList(new Funcionario(1, "Leo", "leo@uesb.com", 1));
+        data = FXCollections.observableArrayList(funcionarioSqlJdbc.getAllFuncionarios());
         tableView.setItems(data);
 
     }

@@ -24,7 +24,7 @@ public class FuncionarioSqlJdbc {
                     Funcionario f = new Funcionario();
                     f.setIdFuncionario(rs.getInt("id_func"));
                     f.setNome(rs.getString("nome"));
-                    f.setNome(rs.getString("email"));
+                    f.setEmail(rs.getString("email"));
                     f.setIdGerente(rs.getInt("id_gerente"));
                     funcionarios.add(f);
                 }
@@ -64,29 +64,14 @@ public class FuncionarioSqlJdbc {
         return funcionarios;
     }
 
-    public void createFuncionarioSemGerente(Funcionario funcionario) {
-        String sql = "insert into funcionario (id_func, nome, email) values (?, ?, ?)";
+    public void createFuncionario(Funcionario funcionario) {
+        String sql = "insert into funcionario (nome, email, id_gerente) values (?, ?, ?)";
 
         try (Connection connection = new ConnectionTravel().getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);) {
-            pst.setInt(1, funcionario.getIdFuncionario());
-            pst.setString(2, funcionario.getNome().toUpperCase());
-            pst.setString(3, funcionario.getEmail().toUpperCase());
-            pst.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createFuncionarioComGerente(Funcionario funcionario) {
-        String sql = "insert into funcionario (id_func, nome, email, id_gerente) values (?, ?, ?, ?)";
-
-        try (Connection connection = new ConnectionTravel().getConnection();
-                PreparedStatement pst = connection.prepareStatement(sql);) {
-            pst.setInt(1, funcionario.getIdFuncionario());
-            pst.setString(2, funcionario.getNome().toUpperCase());
-            pst.setString(3, funcionario.getEmail().toUpperCase());
-            pst.setInt(4, funcionario.getIdGerente());
+            pst.setString(1, funcionario.getNome().toUpperCase());
+            pst.setString(2, funcionario.getEmail().toUpperCase());
+            pst.setInt(3, funcionario.getIdGerente());
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();

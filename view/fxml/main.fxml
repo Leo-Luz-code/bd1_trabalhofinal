@@ -132,7 +132,7 @@
                                                             <Font size="24.0" />
                                                          </font>
                                                       </Label>
-                                                      <Button maxHeight="-Infinity" mnemonicParsing="false" prefHeight="138.0" prefWidth="88.0" text="Novo">
+                                                      <Button fx:id="buttonNovo" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="138.0" prefWidth="88.0" text="Novo">
                                                          <HBox.margin>
                                                             <Insets left="5.0" top="10.0" />
                                                          </HBox.margin>
@@ -143,7 +143,7 @@
                                              <center>
                                                 <TableView fx:id="tableView" prefHeight="389.0" prefWidth="597.0" BorderPane.alignment="CENTER">
                                                   <columns>
-                                                    <TableColumn fx:id="columnId" prefWidth="75.0" text="ID" />
+                                                    <TableColumn fx:id="columnIdFunc" prefWidth="75.0" text="ID" />
                                                     <TableColumn fx:id="columnNome" prefWidth="75.0" text="Nome" />
                                                       <TableColumn fx:id="columnEmail" prefWidth="75.0" text="Email" />
                                                       <TableColumn fx:id="columnIdGerente" prefWidth="75.0" text="Gerente" />

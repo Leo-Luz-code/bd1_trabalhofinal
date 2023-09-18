@@ -15,6 +15,9 @@ public class Hotel {
         this.cnpj = cnpj;
     }
 
+    public Hotel() {
+    }
+
     public int getIdHotel() {
         return idHotel;
     }

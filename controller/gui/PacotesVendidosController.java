@@ -13,7 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.BorderPane;
+import model.entities.Funcionario;
+import dao.HotelSqlJdbc;
 
 public class PacotesVendidosController implements Initializable {
 
@@ -40,6 +43,18 @@ public class PacotesVendidosController implements Initializable {
 
     @FXML
     private TableView tableView;
+
+    @FXML
+    private TableColumn<Funcionario, String> columnIdFunc;
+
+    @FXML
+    private TableColumn<Funcionario, String> columnNome;
+
+    @FXML
+    private TableColumn<Funcionario, String> columnEmail;
+
+    @FXML
+    private TableColumn<Funcionario, Integer> columnIdGerente;
     // private final ObservableList<Funcionario> data;
 
     @Override
@@ -79,7 +94,6 @@ public class PacotesVendidosController implements Initializable {
             Scene scene = new Scene(root);
             Principal.getMainStage().setScene(scene);
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }
