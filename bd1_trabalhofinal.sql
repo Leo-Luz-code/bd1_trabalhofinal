@@ -1,5 +1,7 @@
 /* Lógico_2: */
 
+CREATE DATABASE bd1_trabalhofinal;
+
 CREATE TABLE Cliente (
     id_cliente SERIAL,
     nome VARCHAR(255),

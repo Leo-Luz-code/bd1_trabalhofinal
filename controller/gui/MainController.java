@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Principal;
+import dao.FuncionarioSqlJdbc;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import javafx.scene.layout.BorderPane;
 import model.entities.Funcionario;
 
 public class MainController implements Initializable {
+
+    FuncionarioSqlJdbc funcionarioSqlJdbc = new FuncionarioSqlJdbc();
 
     @FXML
     private Button buttonClientes;
@@ -61,7 +64,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        data = FXCollections.observableArrayList(data);
 
         buttonClientes.setOnAction(e -> {
             loadScene("/view/fxml/clientes.fxml");
@@ -87,10 +89,13 @@ public class MainController implements Initializable {
             loadScene("/view/fxml/pagamentos.fxml");
         });
 
-        columnId.setCellValueFactory(new PropertyValueFactory<>("id_func"));
-        columnId.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        columnId.setCellValueFactory(new PropertyValueFactory<>("email"));
-        columnId.setCellValueFactory(new PropertyValueFactory<>("id_gerente"));
+        columnId.setCellValueFactory(new PropertyValueFactory<>("idFunc"));
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        columnIdGerente.setCellValueFactory(new PropertyValueFactory<>("idGerente"));
+
+        data = FXCollections.observableArrayList(new Funcionario(1, "Leo", "leo@uesb.com", 1));
+        tableView.setItems(data);
 
     }
 

@@ -141,14 +141,12 @@
                                                 </HBox>
                                              </top>
                                              <center>
-                                                <TableView prefHeight="389.0" prefWidth="597.0" BorderPane.alignment="CENTER">
+                                                <TableView fx:id="tableView" prefHeight="389.0" prefWidth="597.0" BorderPane.alignment="CENTER">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="ID" />
-                                                    <TableColumn prefWidth="75.0" text="Nome" />
-                                                      <TableColumn prefWidth="75.0" text="Email" />
-                                                      <TableColumn prefWidth="75.0" text="Telefone" />
-                                                      <TableColumn prefWidth="75.0" text="CPF" />
-                                                      <TableColumn prefWidth="75.0" text="Gerente" />
+                                                    <TableColumn fx:id="columnId" prefWidth="75.0" text="ID" />
+                                                    <TableColumn fx:id="columnNome" prefWidth="75.0" text="Nome" />
+                                                      <TableColumn fx:id="columnEmail" prefWidth="75.0" text="Email" />
+                                                      <TableColumn fx:id="columnIdGerente" prefWidth="75.0" text="Gerente" />
                                                   </columns>
                                                    <columnResizePolicy>
                                                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
